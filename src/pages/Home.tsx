@@ -1,13 +1,15 @@
 import { FormEvent, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useFavorites } from '../hooks/useFavorites'
 
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import { CharacterCard } from '../components/CharacterCard'
+import { FavoriteCharactersCard } from '../components/FavoriteCharactersCard'
 
 import illustrationImg from '../assets/images/illustration.png'
 
 export function Home() {
   const [characterName, setCharacterName] = useState('')
+  const { favorites } = useFavorites()
   const history = useHistory()
 
   function handleRedirectToSearchPage(event: FormEvent) {
@@ -17,7 +19,7 @@ export function Home() {
 
     history.push(`/search/${characterName}`)
   }
-  
+
   return (
     <div className="flex gap-4 h-screen px-8 py-11">
       <aside className="flex-[7] flex flex-col justify-center items-center text-white lg:items-start">
@@ -48,9 +50,12 @@ export function Home() {
         <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-white mb-8">Your favorite characters</h2>
         <div className="self-start w-full"> 
           <ul>
-            <CharacterCard />
-            <CharacterCard />
-            <CharacterCard />
+            {[...favorites].reverse().splice(0, 3).map(character => (
+              <FavoriteCharactersCard 
+                key={character.id}
+                character={character}
+              />
+            ))}
           </ul>
         </div>
         <a href="/" className="mt-8 text-[#E89242FF] font-roboto font-medium underline text-sm hover:brightness-90 transition-all">Access full list</a>
