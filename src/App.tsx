@@ -1,8 +1,10 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { FavoritesContextProvider } from './contexts/FavoritesContext'
 
 import { Home } from './pages/Home'
 import { SearchPage } from './pages/SearchPage';
-import { FavoritesContextProvider } from './contexts/FavoritesContext'
+import { FavoritesPage } from './pages/FavoritesPage';
+
 
 function App() {
   return (
@@ -10,7 +12,8 @@ function App() {
       <Switch>
         <FavoritesContextProvider>
           <Route path="/" exact component={Home} />
-          <Route path="/search" exact component={SearchPage} />
+          <Route path="/search" component={SearchPage} />
+          <Route path="/favorites" component={FavoritesPage} />
         </FavoritesContextProvider>
       </Switch>
     </BrowserRouter>

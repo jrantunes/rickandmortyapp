@@ -68,7 +68,7 @@ export function SearchPage() {
       <header className="bg-[#24325FFF] px-4 py-5 text-[#FFFFFF]">
         <Link to="/" className="flex items-center gap-1 font-roboto font-medium hover:brightness-90 transition-all">
           <RiArrowLeftSLine size={20} color="#FFFFFF"/>
-          Voltar
+          Go back
         </Link>
       </header>
       <main className="flex flex-col items-center px-4 lg:items-start max-w-[1120px] my-8 mx-auto">
@@ -84,8 +84,8 @@ export function SearchPage() {
         ) : !characters ? (
           <h1>{error}</h1>
         ) : (
-          <div className="w-full flex flex-col items-center justify-center">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 mt-8 lg:mr-4">
+          <div className="w-full flex flex-col items-center justify-center mt-8">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 lg:mr-4">
               {characters.results.map(result => (
                 <ResultCard 
                   key={result.id}

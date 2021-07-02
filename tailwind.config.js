@@ -13,6 +13,7 @@ module.exports = {
       mobilelg: '450px',
       mobilexl: '475px',
       tabletlg: '820px',
+      tabletxl: '920px',
       ...screens
     }
   },

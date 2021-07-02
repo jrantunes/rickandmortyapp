@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useFavorites } from '../hooks/useFavorites'
 
 import { AiOutlineArrowRight } from 'react-icons/ai'
@@ -65,12 +65,13 @@ export function Home() {
                 {[...favorites].reverse().splice(0, 3).map(character => (
                   <FavoriteCard 
                     key={character.id}
+                    customStyles="mt-4 first:mt-0"
                     character={character}
                     handleDelete={handleRemoveFromFavorites}
                   />
                 ))}
               </ul>
-              <a href="/" className="mt-8 text-[#E89242FF] font-roboto font-medium underline text-sm hover:brightness-90 transition-all">Access full list</a>
+              <Link to="/favorites" className="mt-8 text-[#E89242FF] font-roboto font-medium underline text-sm hover:brightness-90 transition-all">Access full list</Link>
             </>
           )}
         </div>
