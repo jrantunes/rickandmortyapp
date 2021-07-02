@@ -10,7 +10,7 @@ function App() {
       <Switch>
         <FavoritesContextProvider>
           <Route path="/" exact component={Home} />
-          <Route path="/search/:name" exact component={SearchCharacter} />
+          <Route path="/search" exact component={SearchCharacter} />
         </FavoritesContextProvider>
       </Switch>
     </BrowserRouter>

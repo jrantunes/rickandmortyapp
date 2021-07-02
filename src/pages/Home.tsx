@@ -9,7 +9,7 @@ import illustrationImg from '../assets/images/illustration.png'
 
 export function Home() {
   const [characterName, setCharacterName] = useState('')
-  const { favorites } = useFavorites()
+  const { favorites, handleRemoveFromFavorites } = useFavorites()
   const history = useHistory()
 
   function handleRedirectToSearchPage(event: FormEvent) {
@@ -17,7 +17,7 @@ export function Home() {
 
     if (characterName.trim() === '') return
 
-    history.push(`/search/${characterName}`)
+    history.push(`/search/?name=${characterName.trim().replace(' ', '+')}`)
   }
 
   return (
@@ -54,6 +54,7 @@ export function Home() {
               <FavoriteCharactersCard 
                 key={character.id}
                 character={character}
+                handleDelete={handleRemoveFromFavorites}
               />
             ))}
           </ul>

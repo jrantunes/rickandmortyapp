@@ -16,7 +16,8 @@ type Character = {
 
 type FavoritesContextData = {
   favorites: Character[];
-  handleAddCharacterToFavorites: (character: Character) => void
+  handleAddCharacterToFavorites: (character: Character) => void;
+  handleRemoveFromFavorites: (characterId: number) => void;
 }
 
 export const favoritesContext = createContext<FavoritesContextData>({} as FavoritesContextData)
@@ -25,7 +26,20 @@ export function FavoritesContextProvider({ children }: FavoritesContextProviderP
   const [favorites, setFavorites] = useState<Character[]>([])
 
   function handleAddCharacterToFavorites(character: Character) {
+    const findCharacter = favorites.some(char => char.id === character.id)
+
+    if (findCharacter) {
+      alert('character already added')
+      return
+    }
+
     setFavorites([...favorites, character])
+  }
+
+  function handleRemoveFromFavorites(charId: number) {
+    const newFavoritesArray = favorites.filter(character => character.id !== charId)
+
+    setFavorites([...newFavoritesArray])
   }
 
   useEffect(() => {
@@ -41,7 +55,7 @@ export function FavoritesContextProvider({ children }: FavoritesContextProviderP
   }, [favorites])
   
   return (
-    <favoritesContext.Provider value={{ favorites, handleAddCharacterToFavorites }}>
+    <favoritesContext.Provider value={{ favorites, handleAddCharacterToFavorites, handleRemoveFromFavorites }}>
       {children}
     </favoritesContext.Provider>
   )

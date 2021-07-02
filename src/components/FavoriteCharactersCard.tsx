@@ -12,9 +12,10 @@ type Character = {
 
 type FavoriteCharactersCardProps = {
   character: Character;
+  handleDelete: (characterId: number) => void
 }
 
-export function FavoriteCharactersCard({ character }: FavoriteCharactersCardProps) {
+export function FavoriteCharactersCard({ character, handleDelete }: FavoriteCharactersCardProps) {
   return (
     <li className="flex items-center gap-4 bg-[#24325FFF] p-3 rounded-lg shadow cursor-pointer hover:bg-[#222f5a] transition-colors mt-4 first:mt-0">
       <img 
@@ -37,7 +38,9 @@ export function FavoriteCharactersCard({ character }: FavoriteCharactersCardProp
           episodes
         </p>
       </div>
-      <RiArrowRightSLine size={32} color="#FFFFFF" className="ml-auto" />
+      <button className="text-[0px] ml-auto" onClick={() => handleDelete(character.id)}>
+        <RiArrowRightSLine size={32} color="#FFFFFF" />
+      </button>
     </li>
   )
 }

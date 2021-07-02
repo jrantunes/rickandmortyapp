@@ -1,14 +1,15 @@
-import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { api } from '../services/api'
+import { useLocation } from 'react-router-dom'
 
+import { Link } from 'react-router-dom'
 import { RiArrowLeftSLine } from 'react-icons/ri'
 import { SearchResultCard } from '../components/SearchResultCard'
+import { Pagination } from '../components/Pagination'
+import ReactLoading from 'react-loading'
 
-type SearchParams = {
-  name: string;
-}
+import queryString from 'query-string'
+import { api } from '../services/api'
+
 
 type Character = {
   id: number;
@@ -31,22 +32,36 @@ type SearchResults = {
 } 
 
 export function SearchCharacter() {
-  const [results, setResults] = useState<SearchResults>()
-  const { name } = useParams<SearchParams>()
+  const { search } = useLocation()
+  const { name } = queryString.parse(search)
+
+  const [loading, setLoading] = useState(false)
+  const [characters, setCharacters] = useState<SearchResults>()
+  const [currentPage, setCurrentPage] = useState(0)
+  const [error, setError] = useState('')
+
  
-  console.log(results)
-
   useEffect(() => {
+    setLoading(true)
+    
     async function fetchData() {
-      const response = await api.get(`/character/?name=${name}`)
+      console.log(currentPage)
 
-      const { data } = response
+      try {
+        const response = await api.get(`/character/?page=${currentPage + 1}&name=${name}`)
+  
+        const { data } = response
+  
+        setCharacters(data)
+      } catch(error) {
+        setError(error.message)
+      }
 
-      setResults(data)
+      setLoading(false)
     }
 
     fetchData()
-  }, [name])
+  }, [name, currentPage])
 
   return (
     <>
@@ -58,14 +73,33 @@ export function SearchCharacter() {
       </header>
       <main className="flex flex-col items-center px-4 lg:items-start max-w-[1120px] my-8 mx-auto">
         <h1 className="text-[#FFFFFF] font-poppins font-bold text-3xl">Results for {name}:</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr,1fr] gap-4 mt-8">
-          {results?.results.map(result => (
-            <SearchResultCard 
-              key={result.id}
-              character={result}
+        
+        {loading ? (
+          <div className="w-full flex justify-center items-center mt-16">
+            <ReactLoading 
+              type="spinningBubbles"
+              color="#FFFFFF"
             />
-          ))}
-        </div>
+          </div>
+        ) : !characters ? (
+          <h1>{error}</h1>
+        ) : (
+          <div className="w-full flex flex-col items-center justify-center">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 mt-8">
+              {characters?.results.map(result => (
+                <SearchResultCard 
+                  key={result.id}
+                  character={result}
+                />
+              ))}
+            </div>
+            <Pagination 
+              currentPage={currentPage}
+              totalPages={characters.info.pages}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        )}
       </main>
     </>
   )

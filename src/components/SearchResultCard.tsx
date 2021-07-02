@@ -1,7 +1,7 @@
 import { useFavorites } from '../hooks/useFavorites'
 
 import { GrStatusGoodSmall } from 'react-icons/gr'
-import { AiOutlineStar } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 
 type Character = {
   id: number;
@@ -18,10 +18,10 @@ type SearchResultCardProps = {
 }
 
 export function SearchResultCard({ character }: SearchResultCardProps) {
-  const { handleAddCharacterToFavorites } = useFavorites()
+  const { handleAddCharacterToFavorites, handleRemoveFromFavorites, favorites } = useFavorites()
 
   return (
-    <article className="flex flex-col mobilexl:flex-row gap-4 bg-[#3c3e44] max-w-[34.5rem] rounded-lg shadow overflow-hidden">
+    <article className="flex flex-col mobilexl:flex-row gap-2 bg-[#3c3e44] max-w-[34rem] lg:max-w-full w-full rounded-lg shadow overflow-hidden mx-auto">
       <img 
         className="mobilexl:max-w-[230px]"
         src={character.image} 
@@ -42,13 +42,23 @@ export function SearchResultCard({ character }: SearchResultCardProps) {
           {character.status} - {character.species}
         </p>
         <p className="flex items-center gap-1 font-poppins text-sm text-[#E89242FF]">Gender - {character.gender}</p>
-        <button 
-          onClick={() => handleAddCharacterToFavorites(character)}
-          className="flex items-center justify-center gap-2 w-full p-3 bg-[#E89242FF] font-roboto font-medium rounded-lg mt-auto"
-        >
-          <AiOutlineStar size={20} />
-          Add to favorites
-        </button>
+        {!favorites.some(char => char.id === character.id) ? (
+          <button 
+            onClick={() => handleAddCharacterToFavorites(character)}
+            className="flex items-center justify-center gap-2 w-full p-3 bg-[#E89242FF] hover:bg-[#E8924299] text-[#FFFFFF] font-roboto font-medium rounded-lg mt-auto transition-colors"
+          >
+            <AiOutlineHeart size={20} />
+            Add to favorites
+          </button>
+        ) : (
+          <button 
+            onClick={() => handleRemoveFromFavorites(character.id)}
+            className="flex items-center justify-center gap-2 w-full p-3 bg-[#FB6467FF] hover:bg-[#FB646799] text-[#FFFFFF] font-roboto font-medium rounded-lg mt-auto transition-colors"
+          >
+            <AiFillHeart size={20} />
+            Remove from favorites
+          </button>
+        )}
       </div>
     </article>
   )
