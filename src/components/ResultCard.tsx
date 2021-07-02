@@ -17,11 +17,11 @@ type SearchResultCardProps = {
   character: Character
 }
 
-export function SearchResultCard({ character }: SearchResultCardProps) {
+export function ResultCard({ character }: SearchResultCardProps) {
   const { handleAddCharacterToFavorites, handleRemoveFromFavorites, favorites } = useFavorites()
 
   return (
-    <article className="flex flex-col mobilexl:flex-row gap-2 bg-[#3c3e44] max-w-[34rem] lg:max-w-full w-full rounded-lg shadow overflow-hidden mx-auto">
+    <article className="flex flex-col mobilexl:flex-row gap-2 bg-[#3c3e44] max-w-[34rem] w-full rounded-lg shadow overflow-hidden mx-auto">
       <img 
         className="mobilexl:max-w-[230px]"
         src={character.image} 

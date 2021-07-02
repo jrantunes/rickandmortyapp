@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
 import { RiArrowLeftSLine } from 'react-icons/ri'
-import { SearchResultCard } from '../components/SearchResultCard'
+import { ResultCard } from '../components/ResultCard'
 import { Pagination } from '../components/Pagination'
 import ReactLoading from 'react-loading'
 
@@ -31,7 +31,7 @@ type SearchResults = {
   results: Character[];
 } 
 
-export function SearchCharacter() {
+export function SearchPage() {
   const { search } = useLocation()
   const { name } = queryString.parse(search)
 
@@ -85,9 +85,9 @@ export function SearchCharacter() {
           <h1>{error}</h1>
         ) : (
           <div className="w-full flex flex-col items-center justify-center">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 mt-8">
-              {characters?.results.map(result => (
-                <SearchResultCard 
+            <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 mt-8 lg:mr-4">
+              {characters.results.map(result => (
+                <ResultCard 
                   key={result.id}
                   character={result}
                 />

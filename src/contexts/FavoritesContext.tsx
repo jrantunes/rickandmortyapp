@@ -37,6 +37,8 @@ export function FavoritesContextProvider({ children }: FavoritesContextProviderP
   }
 
   function handleRemoveFromFavorites(charId: number) {
+    if (!window.confirm('Are you sure you want to remove this character from favorites?')) return
+    
     const newFavoritesArray = favorites.filter(character => character.id !== charId)
 
     setFavorites([...newFavoritesArray])

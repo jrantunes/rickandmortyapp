@@ -3,9 +3,10 @@ import { useHistory } from 'react-router-dom'
 import { useFavorites } from '../hooks/useFavorites'
 
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import { FavoriteCharactersCard } from '../components/FavoriteCharactersCard'
+import { FavoriteCard } from '../components/FavoriteCard'
 
 import illustrationImg from '../assets/images/illustration.png'
+import emptyFavorites from '../assets/images/empty-favorites.png'
 
 export function Home() {
   const [characterName, setCharacterName] = useState('')
@@ -21,7 +22,7 @@ export function Home() {
   }
 
   return (
-    <div className="flex gap-4 h-screen px-8 py-11">
+    <div className="flex gap-10 h-screen px-8 py-11">
       <aside className="flex-[7] flex flex-col justify-center items-center text-white lg:items-start">
         <img src={illustrationImg} className="max-w-xs w-full block" alt="Ilustração exibindo Rick e Morty saindo de um portal" />
         <div className="text-center lg:text-left">
@@ -47,19 +48,32 @@ export function Home() {
         </form>
       </aside>
       <main className="flex-[8] lg:flex lg:flex-col lg:justify-center lg:items-center hidden">
-        <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-white mb-8">Your favorite characters</h2>
-        <div className="self-start w-full"> 
-          <ul>
-            {[...favorites].reverse().splice(0, 3).map(character => (
-              <FavoriteCharactersCard 
-                key={character.id}
-                character={character}
-                handleDelete={handleRemoveFromFavorites}
+        <h2 className="font-poppins font-bold text-2xl sm:text-3xl text-white mb-8">Latest favorites</h2>
+        <div className="self-start w-full flex flex-col items-center"> 
+          {favorites.length === 0 ? (
+            <>
+              <h2 className="text-[#FFFFFF] font-poppins font-bold text-xl mb-4">no characters saved :(</h2>
+              <img 
+                className="max-w-xs w-full grayscale block"
+                src={emptyFavorites} 
+                alt="top" 
               />
-            ))}
-          </ul>
+            </>
+          ) : (
+            <>
+              <ul className="w-full">
+                {[...favorites].reverse().splice(0, 3).map(character => (
+                  <FavoriteCard 
+                    key={character.id}
+                    character={character}
+                    handleDelete={handleRemoveFromFavorites}
+                  />
+                ))}
+              </ul>
+              <a href="/" className="mt-8 text-[#E89242FF] font-roboto font-medium underline text-sm hover:brightness-90 transition-all">Access full list</a>
+            </>
+          )}
         </div>
-        <a href="/" className="mt-8 text-[#E89242FF] font-roboto font-medium underline text-sm hover:brightness-90 transition-all">Access full list</a>
       </main>
     </div>
   )

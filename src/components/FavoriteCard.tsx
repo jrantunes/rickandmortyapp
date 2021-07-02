@@ -15,7 +15,7 @@ type FavoriteCharactersCardProps = {
   handleDelete: (characterId: number) => void
 }
 
-export function FavoriteCharactersCard({ character, handleDelete }: FavoriteCharactersCardProps) {
+export function FavoriteCard({ character, handleDelete }: FavoriteCharactersCardProps) {
   return (
     <li className="flex items-center gap-4 bg-[#24325FFF] p-3 rounded-lg shadow cursor-pointer hover:bg-[#222f5a] transition-colors mt-4 first:mt-0">
       <img 
