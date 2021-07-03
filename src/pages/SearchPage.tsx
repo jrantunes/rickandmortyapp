@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { api } from '../services/api'
+import queryString from 'query-string'
 
+import ReactLoading from 'react-loading'
 import { Link } from 'react-router-dom'
 import { RiArrowLeftSLine } from 'react-icons/ri'
 import { ResultCard } from '../components/ResultCard'
 import { Pagination } from '../components/Pagination'
-import ReactLoading from 'react-loading'
-
-import queryString from 'query-string'
-import { api } from '../services/api'
-
 
 type Character = {
   id: number;
@@ -23,10 +21,7 @@ type Character = {
 
 type SearchResults = {
   info: {
-    count: number;
     pages: number;
-    next: string;
-    prev: string | null;
   }
   results: Character[];
 } 
@@ -86,10 +81,10 @@ export function SearchPage() {
         ) : (
           <div className="w-full flex flex-col items-center justify-center mt-8">
             <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 lg:mr-4">
-              {characters.results.map(result => (
+              {characters.results.map(character => (
                 <ResultCard 
-                  key={result.id}
-                  character={result}
+                  key={character.id}
+                  character={character}
                 />
               ))}
             </div>

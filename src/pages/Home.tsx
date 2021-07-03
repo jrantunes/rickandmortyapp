@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useFavorites } from '../hooks/useFavorites'
 
 import { AiOutlineArrowRight } from 'react-icons/ai'
+import { AiFillHeart } from 'react-icons/ai'
 import { FavoriteCard } from '../components/FavoriteCard'
 
 import illustrationImg from '../assets/images/illustration.png'
@@ -22,7 +23,7 @@ export function Home() {
   }
 
   return (
-    <div className="flex gap-10 h-screen px-8 py-11">
+    <div className="flex gap-10 h-screen px-8 py-11 relative">
       <aside className="flex-[7] flex flex-col justify-center items-center text-white lg:items-start">
         <img src={illustrationImg} className="max-w-xs w-full block" alt="Ilustração exibindo Rick e Morty saindo de um portal" />
         <div className="text-center lg:text-left">
@@ -76,6 +77,9 @@ export function Home() {
           )}
         </div>
       </main>
+      <Link to="/favorites" className="absolute right-3 top-3 p-4 bg-[#E89242FF] text-[0px] rounded-full lg:hidden">
+        <AiFillHeart size={20} color="#FFFFFF" />
+      </Link>
     </div>
   )
 }
