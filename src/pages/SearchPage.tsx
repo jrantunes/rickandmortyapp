@@ -9,6 +9,8 @@ import { RiArrowLeftSLine } from 'react-icons/ri'
 import { ResultCard } from '../components/ResultCard'
 import { Pagination } from '../components/Pagination'
 
+import emptyFavorites from '../assets/images/empty-favorites.png'
+
 type Character = {
   id: number;
   name: string;
@@ -33,8 +35,6 @@ export function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [characters, setCharacters] = useState<SearchResults>()
   const [currentPage, setCurrentPage] = useState(0)
-  const [error, setError] = useState('')
-
  
   useEffect(() => {
     setLoading(true)
@@ -49,7 +49,7 @@ export function SearchPage() {
   
         setCharacters(data)
       } catch(error) {
-        setError(error.message)
+        console.log(error)
       }
 
       setLoading(false)
@@ -77,7 +77,14 @@ export function SearchPage() {
             />
           </div>
         ) : !characters ? (
-          <h1>{error}</h1>
+          <div className="mt-5 self-center tabletxl:self-start">
+            <h2 className="text-[#FFFFFF] font-poppins font-bold text-xl mb-4 text-center tabletxl:text-left">no results for {name} :(</h2>
+            <img 
+              className="max-w-xs w-full grayscale block"
+              src={emptyFavorites} 
+              alt="top" 
+            />
+          </div>
         ) : (
           <div className="w-full flex flex-col items-center justify-center mt-8">
             <div className="w-full grid grid-cols-1 lg:grid-cols-[50%,50%] gap-4 lg:mr-4">
