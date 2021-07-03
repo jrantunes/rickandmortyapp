@@ -19,7 +19,9 @@ export function Home() {
 
     if (characterName.trim() === '') return
 
-    history.push(`/search/?name=${characterName.trim().replace(' ', '+')}`)
+    history.push(
+      `/search/?name=${characterName.trim().replace(/\s\s+/g, '+')}`
+    )
   }
 
   return (
