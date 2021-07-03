@@ -13,11 +13,16 @@ type Character = {
 
 type FavoriteCardProps = {
   character: Character;
+  // Estilos personalizados
   customStyles?: string;  
   children?: ReactNode;
   handleDelete: (characterId: number) => void
 }
 
+// Card de favoritos (usado na home) gerado a partir de um personagem passado via parâmetro
+// uma função encarregada de remover o personagem dos favoritos passado via parâmetro
+// estilos personalizado (opcional) passados via parâmetro
+// e um children (opcional) 
 export function FavoriteCard({ character, customStyles, handleDelete, children }: FavoriteCardProps) {
   return (
     <li className={`flex items-center gap-4 bg-[#24325FFF] p-3 rounded-lg shadow max-w-[33.5rem] tabletxl:max-w-full w-full ${customStyles}`}>
@@ -31,6 +36,7 @@ export function FavoriteCard({ character, customStyles, handleDelete, children }
         <div className="flex gap-2 flex-col mobilelg:flex-row">
           <p className="font-poppins text-[#E89242FF] text-xs flex gap-1 items-center">
             <GrStatusGoodSmall size={12} color={
+            // Cor definida a partir do status do personagem 'Alive', 'Dead' ou 'unknown'
               character.status === 'Alive' 
               ? '#34D399' 
               : character.status === 'Dead' 
@@ -45,6 +51,7 @@ export function FavoriteCard({ character, customStyles, handleDelete, children }
         </div>
       </div>
       {children &&  (
+        // botão de remover o personagem dos favoritos renderizado apenas quando o children é passado
         <button className="text-[0px] ml-auto" onClick={() => handleDelete(character.id)}>
           {children}
         </button>
